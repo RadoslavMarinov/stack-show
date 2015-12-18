@@ -1,0 +1,125 @@
+
+<project basedir="../../../" name="do-report" default="extract-common-paths">
+	<xmlproperty keeproot="false" file="implementation/xml/ant/properties.xml"/>
+	<!--	-->
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="${infrastructure-base-dir}/apache-ant-1.9.6/lib/antcontrib.jar"/>
+		</classpath>
+	</taskdef>
+	<!--	-->
+	<macrodef name="get-common-path">
+		<attribute name="common-path-property"/>
+		<attribute name="file"/>
+		<attribute name="file-base-dir"/>
+		<sequential>
+			<local name="file-dir-absolute-path"/>
+			<dirname property="file-dir-absolute-path" file="@{file}"/>
+			<property name="file-base-dir-absolute-path" location="@{file-base-dir}"/>
+			<echo>MACRODEF FILE: ${file-dir-absolute-path}</echo>
+			<echo>MACRODEF FILE-BASE-DIR: ${file-base-dir-absolute-path}</echo>
+			<pathconvert property="@{common-path-property}" dirsep="/">
+				<path location="${file-dir-absolute-path}"/>
+				<map from="${file-base-dir-absolute-path}/" to=""/>
+			</pathconvert>
+		</sequential>
+	</macrodef>
+	<!--	-->
+	<target name="clean">
+		<delete dir="${dita-odt.path.odt-unzipped-base-dir}" includeemptydirs="true" failonerror="no"/>
+		<delete dir="examples/intermediate/odt-files" includeemptydirs="true" failonerror="no"/>
+	</target>
+	<!--	-->
+	<target name="unzip-writing-odt-file" depends="clean">
+		<unzip src="${dita-odt.path.writing-odt}" dest="${dita-odt.path.writing-odt-unzipped}"/>
+	</target>
+	<!--	-->
+	<target name="extract-common-paths" depends="unzip-writing-odt-file">
+		<for param="file">
+			<path>
+				<fileset dir="${dita-odt.path.text-xml-base-dir}">
+					<include name="**/content.xml"/>
+				</fileset>
+			</path>
+			<sequential>
+				<echo>@{file}</echo>
+				<get-common-path common-path-property="common-path" file="@{file}" file-base-dir="${dita-odt.path.text-xml-base-dir}"/>
+				<echo>THIS IS THE PATH: ${common-path}</echo>
+			</sequential>
+		</for>
+	</target>
+	<!--	-->
+	<target name="copy-text-path" description="copy text-xml path relative to text-xml-base-dir">
+		<dirname property="text-absolute-dir-path" file="${file}"/>
+		<property name="absolute-path-text-base-dir" location="${dita-odt.path.text-xml-base-dir}"/>
+		<pathconvert property="common-path" dirsep="/">
+			<path location="${text-absolute-dir-path}"/>
+			<map from="${absolute-path-text-base-dir}/" to=""/>
+		</pathconvert>
+		<antcall target="copy-writing-unzipped">
+			<param name="common-path" value="${common-path}"/>
+		</antcall>
+	</target>
+	<!--	-->
+	<target name="copy-writing-unzipped">
+		<echo>${common-path}</echo>
+		<copy todir="${dita-odt.path.odt-unzipped-base-dir}/${common-path}">
+			<fileset dir="${dita-odt.path.writing-odt-unzipped}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+	<!--   -->
+	<target name="transform-all" depends="extract-common-paths">
+		<foreach target="transform" param="file">
+			<path>
+				<fileset dir="${dita-odt.path.text-xml-base-dir}">
+					<include name="**/content.xml"/>
+				</fileset>
+			</path>
+		</foreach>
+	</target>
+	<!--   -->
+	<target name="transform">
+		<basename property="file-base-name" file="${file}"/>
+		<dirname property="file-dir-absolute-path" file="${file}"/>
+		<property name="text-xml-base-dir-absolute-path" location="${dita-odt.path.text-xml-base-dir}"/>
+		<pathconvert property="common-path" dirsep="/">
+			<path location="${file-dir-absolute-path}"/>
+			<map from="${text-xml-base-dir-absolute-path}/" to=""/>
+		</pathconvert>
+		<!--Substitutes backslashes with forword slashes. Basedir is a reserved property that returns absolute path with separator symbols of the current OS.-->
+		<pathconvert dirsep="/" property="base-dir-unix">
+			<path location="${basedir}"/>
+		</pathconvert>
+		<echo>TRANSFORM TO: ${dita-odt.path.odt-unzipped-base-dir}/${common-path}/${file-base-name}</echo>
+		<xslt in="${file}" out="${dita-odt.path.odt-unzipped-base-dir}/${common-path}/${file-base-name}" style="${dita-odt.path.text-odt-xsl}" extension=".xml" force="true">
+			<param name="dir-path-styles-xml" expression="${dita-odt.path.odt-unzipped-base-dir}/${common-path}"/>
+			<param name="project-base-dir-absolute-path" expression="${base-dir-unix}"/>
+			<classpath location="${infrastructure-base-dir}/${dita-odt.text-odt-xsl.processor}"/>
+		</xslt>
+	</target>
+	<!--   -->
+	<target name="zip-all" depends="transform-all" description="Turns all unzipped text folders into ODT files">
+		<foreach target="zip-odt" param="file">
+			<path>
+				<fileset dir="${dita-odt.path.odt-unzipped-base-dir}" includes="**/content.xml" excludes="writing/**"/>
+			</path>
+		</foreach>
+	</target>
+	<!--	-->
+	<target name="zip-odt">
+		<basename property="file-base-name" file="${file}"/>
+		<dirname property="file-dir-absolute-path" file="${file}"/>
+		<!--This property will be used to provided name for the produced ODT file. The document will have the same name as the folder that contains it.-->
+		<basename property="odt-doc-name" file="${file-dir-absolute-path}.odt"/>
+		<property name="odt-unzipped-base-dir-absolute-path" location="${dita-odt.path.odt-unzipped-base-dir}"/>
+		<pathconvert property="common-path" dirsep="/">
+			<path location="${file-dir-absolute-path}"/>
+			<map from="${odt-unzipped-base-dir-absolute-path}/" to=""/>
+		</pathconvert>
+		<echo>COMMON PATH: ${common-path}</echo>
+		<zip destfile="examples/intermediate/odt-files/${common-path}/${odt-doc-name}" basedir="${dita-odt.path.odt-unzipped-base-dir}/${common-path}" update="true"/>
+	</target>
+	<!--	-->
+</project>
