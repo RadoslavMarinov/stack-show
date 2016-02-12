@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dita xml:lang="">
+   <concept id="1">
+      <title>Level 1</title>
+      <shortdesc/>
+      <conbody>
+         <concept id="2">
+            <title>Level 2</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+         <concept id="2">
+            <title>Level 2</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+         <concept id="3">
+            <title>Level 2</title>
+            <shortdesc/>
+            <conbody>
+               <concept id="4">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="4">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="5">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="5">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+            </conbody>
+         </concept>
+         <concept id="3">
+            <title>Level 2</title>
+            <shortdesc/>
+            <conbody>
+               <concept id="4">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="4">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="5">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="5">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+            </conbody>
+         </concept>
+      </conbody>
+   </concept>
+   <concept id="2">
+      <title>Level 2</title>
+      <shortdesc/>
+      <conbody/>
+   </concept>
+   <concept id="3">
+      <title>Level 2</title>
+      <shortdesc/>
+      <conbody>
+         <concept id="4">
+            <title>Level 3</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+         <concept id="4">
+            <title>Level 3</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+         <concept id="5">
+            <title>Level 3</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+         <concept id="5">
+            <title>Level 3</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+      </conbody>
+   </concept>
+   <concept id="4">
+      <title>Level 3</title>
+      <shortdesc/>
+      <conbody/>
+   </concept>
+   <concept id="5">
+      <title>Level 3</title>
+      <shortdesc/>
+      <conbody/>
+   </concept>
+   <concept id="6">
+      <title>Level 1</title>
+      <shortdesc/>
+      <conbody>
+         <concept id="7">
+            <title>Level 2</title>
+            <shortdesc/>
+            <conbody>
+               <concept id="8">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="8">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+            </conbody>
+         </concept>
+         <concept id="7">
+            <title>Level 2</title>
+            <shortdesc/>
+            <conbody>
+               <concept id="8">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+               <concept id="8">
+                  <title>Level 3</title>
+                  <shortdesc/>
+                  <conbody/>
+               </concept>
+            </conbody>
+         </concept>
+      </conbody>
+   </concept>
+   <concept id="7">
+      <title>Level 2</title>
+      <shortdesc/>
+      <conbody>
+         <concept id="8">
+            <title>Level 3</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+         <concept id="8">
+            <title>Level 3</title>
+            <shortdesc/>
+            <conbody/>
+         </concept>
+      </conbody>
+   </concept>
+   <concept id="8">
+      <title>Level 3</title>
+      <shortdesc/>
+      <conbody/>
+   </concept>
+</dita>
