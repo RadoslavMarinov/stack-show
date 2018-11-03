@@ -1,0 +1,24 @@
+AT+CIPSTART="TCP","electricity-manager1.herokuapp.com",80<CR><LF>
+
+"AT+CIPSEND=69\r\n"
+"AT+CIPSEND=69<CR><LF>"
+
+/* For C to calculate string len
+GET /api/hello HTTP/1.1\r\nHost: electricity-manager1.herokuapp.com\r\n\r\n
+*/
+GET /api/hello HTTP/1.1<CR><LF>Host: electricity-manager1.herokuapp.com<CR><LF><CR><LF>
+
+
+// LOCAL SERVER
+
+AT+CIPSTART="TCP","192.168.0.102",3000<CR><LF>
+
+AT+CIPSEND=48<CR><LF>
+
+/* For C to calculate string len
+GET /api/hello HTTP/1.1\r\nHost: 192.168.0.102\r\n\r\n
+*/
+
+
+GET /api/hello HTTP/1.1\r\nHost: 192.168.0.102\r\nContent-Type: application/json\r\n\r\n
+GET /api/hello HTTP/1.1<CR><LF>Host: 192.168.0.102<CR><LF>Content-Type: application/json<CR><LF><CR><LF>
